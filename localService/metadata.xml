@@ -1,0 +1,117 @@
+<edmx:Edmx xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData" Version="1.0">
+	<edmx:Reference xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx"
+		Uri="http://vapfiorit01.internal.ctt.pt:8000/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='SHTCLNT100')/$value">
+		<edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+	</edmx:Reference>
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="ZEWM_ARRUMACAO_MERCADORIA_SRV_01" xml:lang="en"
+			sap:schema-version="1">
+			<EntityType Name="ZEWM_S_SCWM_TO_CONFIRM" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="LGNUM"/>
+				</Key>
+				<Property Name="LGNUM" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Warehouse No." sap:sortable="false"
+					sap:filterable="false"/>
+				<Property Name="TANUM" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:sortable="false" sap:filterable="false"/>
+				<Property Name="UNAME" Type="Edm.String" MaxLength="12" sap:unicode="false" sap:sortable="false" sap:filterable="false"/>
+				<Property Name="VLENR" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="Src HU" sap:sortable="false" sap:filterable="false"/>
+				<Property Name="NLPLA" Type="Edm.String" MaxLength="18" sap:unicode="false" sap:label="Dest. Stor. Bin" sap:sortable="false"
+					sap:filterable="false"/>
+				<Property Name="VSOLA" Type="Edm.String" MaxLength="45" sap:unicode="false" sap:sortable="false" sap:filterable="false"/>
+				<Property Name="MEINS" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:sortable="false" sap:filterable="false"/>
+				<Property Name="statusCode" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:sortable="false" sap:filterable="false"/>
+				<Property Name="MESSAGE" Type="Edm.String" MaxLength="256" sap:unicode="false" sap:sortable="false" sap:filterable="false"/>
+				<Property Name="EXCCODE" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="Exception Code" sap:sortable="false"
+					sap:filterable="false"/>
+			</EntityType>
+			<EntityType Name="ZEWMCDS_MATERIALSType" sap:label="MD_ Materials catalog for EWM" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="MaterialGUID16"/>
+				</Key>
+				<Property Name="MaterialGUID16" Type="Edm.Guid" Nullable="false" sap:label="Product" sap:quickinfo="Internal Key for Product"/>
+				<Property Name="matnr" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+				<Property Name="meins" Type="Edm.String" MaxLength="3" sap:label="Base Unit of Measure" sap:semantics="unit-of-measure"/>
+				<Property Name="spras" Type="Edm.String" MaxLength="2" sap:label="Language Key"/>
+				<Property Name="maktx" Type="Edm.String" MaxLength="40" sap:label="Material description"/>
+			</EntityType>
+			<EntityType Name="ZEWMCDS_TEXCEPType" sap:label="CDS for EWM Exception Code" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="WarehouseNumber"/>
+					<PropertyRef Name="ExceptionCode"/>
+				</Key>
+				<Property Name="WarehouseNumber" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase"
+					sap:label="Warehouse Number" sap:quickinfo="Warehouse Number/Warehouse Complex"/>
+				<Property Name="ExceptionCode" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Exception Code"/>
+				<Property Name="Description" Type="Edm.String" MaxLength="40" sap:label="Description"/>
+			</EntityType>
+			<EntityType Name="ZEWMCDS_WTOType" sap:label="Warehouse Tasks Open by Resource" sap:content-version="1">
+				<Key>
+					<PropertyRef Name="WarehouseTask"/>
+				</Key>
+				<Property Name="WarehouseTask" Type="Edm.String" Nullable="false"/>
+				<Property Name="MaterialID" Type="Edm.Guid" sap:label="Product"/>
+				<Property Name="MaterialCode" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Material"
+					sap:quickinfo="Material Number"/>
+				<Property Name="Quantity" Type="Edm.Decimal" Precision="31" Scale="14" sap:label="Target Quantity Altn"
+					sap:quickinfo="Target Quantity in Alternative Unit of Measure"/>
+				<Property Name="UnitMeasure" Type="Edm.String" MaxLength="3" sap:label="Base Unit of Measure" sap:semantics="unit-of-measure"/>
+				<Property Name="MaterialDescription" Type="Edm.String" MaxLength="40" sap:label="Material description"/>
+				<Property Name="WarehouseNumber" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Warehouse Number"
+					sap:quickinfo="Warehouse Number/Warehouse Complex"/>
+				<Property Name="UserName" Type="Edm.String" MaxLength="12" sap:display-format="UpperCase" sap:label="User"
+					sap:quickinfo="User Name in User Master Record" sap:creatable="false" sap:updatable="false"/>
+				<Property Name="Queue" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Queue" sap:creatable="false"
+					sap:updatable="false"/>
+				<Property Name="UCsource" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="Source Handling Unit"
+					sap:creatable="false" sap:updatable="false"/>
+				<Property Name="StorageType" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Dest. Storage Type"
+					sap:quickinfo="Destination Storage Type"/>
+				<Property Name="StorageSection" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Dest. Stor. Section"
+					sap:quickinfo="Destination Storage Section"/>
+				<Property Name="UCdestination" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Dest. Stor. Bin"
+					sap:quickinfo="Destination Storage Bin"/>
+				<Property Name="VerificationCode" Type="Edm.String" MaxLength="18" sap:display-format="UpperCase" sap:label="Verification"
+					sap:quickinfo="Verification Field for Mobile Data Entry"/>
+				<NavigationProperty Name="toExceptionCodes" Relationship="ZEWM_ARRUMACAO_MERCADORIA_SRV_01.assoc_E677F90763262CCE35211D321D6738F3"
+					FromRole="FromRole_assoc_E677F90763262CCE35211D321D6738F3" ToRole="ToRole_assoc_E677F90763262CCE35211D321D6738F3"/>
+				<NavigationProperty Name="toMaterial" Relationship="ZEWM_ARRUMACAO_MERCADORIA_SRV_01.assoc_1B5D866343EDC213ECDC5630B1133540"
+					FromRole="FromRole_assoc_1B5D866343EDC213ECDC5630B1133540" ToRole="ToRole_assoc_1B5D866343EDC213ECDC5630B1133540"/>
+			</EntityType>
+			<Association Name="assoc_1B5D866343EDC213ECDC5630B1133540" sap:content-version="1">
+				<End Type="ZEWM_ARRUMACAO_MERCADORIA_SRV_01.ZEWMCDS_WTOType" Multiplicity="1" Role="FromRole_assoc_1B5D866343EDC213ECDC5630B1133540"/>
+				<End Type="ZEWM_ARRUMACAO_MERCADORIA_SRV_01.ZEWMCDS_MATERIALSType" Multiplicity="0..1" Role="ToRole_assoc_1B5D866343EDC213ECDC5630B1133540"/>
+			</Association>
+			<Association Name="assoc_E677F90763262CCE35211D321D6738F3" sap:content-version="1">
+				<End Type="ZEWM_ARRUMACAO_MERCADORIA_SRV_01.ZEWMCDS_WTOType" Multiplicity="1" Role="FromRole_assoc_E677F90763262CCE35211D321D6738F3"/>
+				<End Type="ZEWM_ARRUMACAO_MERCADORIA_SRV_01.ZEWMCDS_TEXCEPType" Multiplicity="*" Role="ToRole_assoc_E677F90763262CCE35211D321D6738F3"/>
+			</Association>
+			<EntityContainer Name="ZEWM_ARRUMACAO_MERCADORIA_SRV_01_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+				<EntitySet Name="Z_SCWM_TO_CONFIRM" EntityType="ZEWM_ARRUMACAO_MERCADORIA_SRV_01.ZEWM_S_SCWM_TO_CONFIRM" sap:deletable="false"
+					sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+				<EntitySet Name="ZEWMCDS_MATERIALS" EntityType="ZEWM_ARRUMACAO_MERCADORIA_SRV_01.ZEWMCDS_MATERIALSType" sap:creatable="false"
+					sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+				<EntitySet Name="ZEWMCDS_TEXCEP" EntityType="ZEWM_ARRUMACAO_MERCADORIA_SRV_01.ZEWMCDS_TEXCEPType" sap:creatable="false"
+					sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+				<EntitySet Name="ZEWMCDS_WTO" EntityType="ZEWM_ARRUMACAO_MERCADORIA_SRV_01.ZEWMCDS_WTOType" sap:creatable="false" sap:updatable="false"
+					sap:deletable="false" sap:content-version="1"/>
+				<AssociationSet Name="assoc_E677F90763262CCE35211D321D6738F3"
+					Association="ZEWM_ARRUMACAO_MERCADORIA_SRV_01.assoc_E677F90763262CCE35211D321D6738F3" sap:creatable="false" sap:updatable="false"
+					sap:deletable="false" sap:content-version="1">
+					<End EntitySet="ZEWMCDS_WTO" Role="FromRole_assoc_E677F90763262CCE35211D321D6738F3"/>
+					<End EntitySet="ZEWMCDS_TEXCEP" Role="ToRole_assoc_E677F90763262CCE35211D321D6738F3"/>
+				</AssociationSet>
+				<AssociationSet Name="assoc_1B5D866343EDC213ECDC5630B1133540"
+					Association="ZEWM_ARRUMACAO_MERCADORIA_SRV_01.assoc_1B5D866343EDC213ECDC5630B1133540" sap:creatable="false" sap:updatable="false"
+					sap:deletable="false" sap:content-version="1">
+					<End EntitySet="ZEWMCDS_WTO" Role="FromRole_assoc_1B5D866343EDC213ECDC5630B1133540"/>
+					<End EntitySet="ZEWMCDS_MATERIALS" Role="ToRole_assoc_1B5D866343EDC213ECDC5630B1133540"/>
+				</AssociationSet>
+			</EntityContainer>
+			<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="self"
+				href="http://vapfiorit01.internal.ctt.pt:8000/sap/opu/odata/sap/ZEWM_ARRUMACAO_MERCADORIA_SRV_01/$metadata"/>
+			<atom:link xmlns:atom="http://www.w3.org/2005/Atom" rel="latest-version"
+				href="http://vapfiorit01.internal.ctt.pt:8000/sap/opu/odata/sap/ZEWM_ARRUMACAO_MERCADORIA_SRV_01/$metadata"/>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

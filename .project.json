@@ -1,0 +1,13 @@
+{
+  "deploy": {
+    "destination": "SFT",
+    "name": "ZEWMF_AM"
+  },
+  "mockpreview": {
+    "loadJSONFiles": true,
+    "mockUri": "/sap/opu/odata/sap/ZEWM_ARRUMACAO_MERCADORIA_SRV_01/",
+    "metadataFilePath": "localService/metadata.xml",
+    "loadCustomRequests": false,
+    "mockRequestsFilePath": ""
+  }
+}

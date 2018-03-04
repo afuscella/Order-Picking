@@ -1,0 +1,102 @@
+<mvc:View 
+	xmlns="sap.m" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:semantic="sap.m.semantic" 
+	controllerName="pt.ewm.am.controller.Worklist">
+
+	<semantic:FullscreenPage 
+		id="page" 
+		navButtonPress="onNavBack" 
+		showNavButton="true" 
+		title="{worklistView>/title}">
+		
+		<semantic:content>
+			<PullToRefresh 
+				id="pullToRefresh" 
+				visible="{device>/support/touch}" 
+				refresh="onRefresh" 
+				showIcon="true"/>
+				
+			<SearchField 
+				id="searchField" 
+				showRefreshButton="{= !${device>/support/touch} }" 
+				tooltip="{i18n>worklistSearchTooltip}"
+				liveChange="onLiveChange" 
+				placeholder="{i18n>worklistSearchPlaceholder}"
+				maxLength="20" 
+				width="100%" />
+				
+			<!-- For client side filtering add this to the items attribute: parameters: {operationMode: 'Client'}}" -->
+			<List 
+				id="list" 
+				items="{       
+					path: '/ZEWMCDS_WTO',       
+					sorter: {        
+						path: 'UCsource',        
+						descending: false      
+					},      
+					parameters: {       
+						expand : 'toMaterial,toExceptionCodes'      
+						}      
+					}" 
+				busyIndicatorDelay="{worklistView>/listBusyDelay}" 
+				enableBusyIndicator="true" 
+				noDataText="{worklistView>/noDataText}" 
+				mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" 
+				growing="true" 
+				growingScrollToLoad="true" 
+				updateFinished="onUpdateFinished" 
+				selectionChange="onSelectionChange">
+				<swipeContent>
+					<Button 
+						text="Detalhes" 
+						type="Default" 
+						press="onSwipePress"/>
+				</swipeContent>
+				
+				<!--infoToolbar>
+					<Toolbar active="true" id="filterBar" visible="{masterView>/isFilterBarVisible}" press="onOpenViewSettings">
+						<Title id="filterBarLabel" text="{masterView>/filterBarLabel}"/>
+					</Toolbar>
+				</infoToolbar-->
+
+				<items>
+					<ObjectListItem
+						counter="0" 
+						type="{= ${device>/system/phone} ? 'Active' : 'Navigation'}" 
+						title="{WarehouseTask}" 
+						intro="{i18n>worklistListIntro}" 
+						numberUnit="{i18n>worklistListUnitMeasure}" 
+						number="{UCsource}" 
+						press="onSelectionChange" 
+						highlight="Warning" 
+						iconDensityAware="true">
+						<attributes>
+							<ObjectAttribute 
+								text="{Queue}" 
+								title="{i18n>worklistListAttributeQueue}" 
+								active="true"/>
+						</attributes>
+					</ObjectListItem>
+				</items>
+				
+			</List>
+		</semantic:content>
+
+	<semantic:customHeaderContent>
+				<Button 
+					icon="sap-icon://message-popup"
+					enabled="{
+						path: 'messages>/count',
+						formatter: '.formatter.isAnyMessageAvailable'
+					}"
+					visible="{
+						path: 'messages>/count',
+						formatter: '.formatter.isAnyMessageAvailable'
+					}"
+					text="{= ${messages>/count} ? ${messages>/count} : ''}"
+					press="onMessagePopoverPress"/>
+	</semantic:customHeaderContent>
+
+	</semantic:FullscreenPage>
+</mvc:View>

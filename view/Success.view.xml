@@ -1,0 +1,21 @@
+<mvc:View
+	controllerName="pt.ewm.am.controller.Success"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m">
+
+	<MessagePage
+		id="page"
+		title="{i18n>successTitle}"
+		text="{successView>/text}"
+		icon="/src/img/accepted.png"
+		showNavButton="true"
+		showHeader="false">
+		<customDescription>
+			<Link 
+				id="link" 
+				text="{successView>/linkText}" 
+				press="onLinkPressed" />
+		</customDescription>
+	</MessagePage>
+	
+</mvc:View>

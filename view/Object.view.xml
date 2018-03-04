@@ -1,0 +1,144 @@
+<mvc:View
+	xmlns="sap.m" 
+	xmlns:core="sap.ui.core" 
+	xmlns:mvc="sap.ui.core.mvc" 
+	xmlns:semantic="sap.m.semantic" 
+	xmlns:footerbar="sap.ushell.ui.footerbar" 
+	xmlns:smartfield="sap.ui.comp.smartfield" 
+	xmlns:smartform="sap.ui.comp.smartform" 
+	xmlns:l="sap.ui.layout"
+	xmlns:fo="sap.f"
+	xmlns:form="sap.ui.layout.form" 
+	controllerName="pt.ewm.am.controller.Object" 
+	class="sapUiSizeCozy">
+
+	<semantic:FullscreenPage 
+		id="page" 
+		navButtonPress="onNavBack" 
+		showNavButton="true" 
+		title="{objectView>/title}"
+		busy="{objectView>/busy}"
+		busyIndicatorDelay="{objectView>/delay}">
+
+		<semantic:content>
+			<!-- Object Header Section -->
+			<ObjectHeader 
+				id="objectHeader"
+				title="{UCsource}" 
+				intro="{= !${device>/support/touch} ? ${i18n>objectHeaderIntro} : '' }"
+				backgroundDesign="Translucent" 
+				condensed="false" 
+				responsive="true" 
+				fullScreenOptimized="true" 
+				icon="sap-icon://task">
+			    <statuses>
+			        <ObjectStatus 
+			        	text="{i18n>objectHeaderStatusText}"
+			        	title="{i18n>objectHeaderStatusTitle}" 
+			        	state="Warning" 
+			        	icon="sap-icon://pending" 
+			        	visible="{= ${device>/system/phone} ? false : true }"/>
+			    </statuses>
+			</ObjectHeader>
+				
+			<!-- Body section -->
+			<MessageStrip
+				id="messageStripId"
+				text="{objectView>/messageText}"
+				type="{i18n>objectMessageStripTypeError}"
+				enableFormattedText="true"
+				showIcon="true"
+				showCloseButton="true"
+				visible="false"
+				class="sapUiResponsiveMargin" />
+			
+			<smartform:SmartForm id="formTask" editable="true" >
+				
+				<smartform:Group id="formGroupTask">
+					<smartform:GroupElement>
+					
+					<form:Form 
+						editable="true" 
+						title="{StorageType} {StorageSection} / {UCdestination}"
+						width="auto">
+						<form:layout>
+							<form:ResponsiveGridLayout 
+								labelSpanXL="3" labelSpanL="3" labelSpanM="3" 
+								labelSpanS="12" adjustLabelSpan="false" 
+								emptySpanXL="4" emptySpanL="4" emptySpanM="4" 
+								emptySpanS="0"  columnsXL="1"  columnsL="1" columnsM="1" 
+								singleContainerFullSize="false"/>
+						</form:layout>
+						<form:formContainers>
+							<form:FormContainer>
+								
+								<form:formElements>
+									
+									<form:FormElement label="{i18n>objectFormUCdestinationText}">
+										<form:fields>
+											<Input
+												id="ucDestinationId" 
+												placeholder="{UCdestination}" 
+												width="auto" 
+												liveChange="onUcDestinationLiveChange" 
+												change="onUcDestinationChange"/>
+										
+										</form:fields>
+									</form:FormElement>
+
+									<form:FormElement label="{toMaterial/maktx} | {i18n>objectFormQuantityLabel} ({toMaterial/meins})">
+										<form:fields>
+											<Input 
+												id="quantityId" 
+												value="{Quantity}"
+												width="auto"/>
+										</form:fields>
+									</form:FormElement>
+									
+									<form:FormElement label="{i18n>objectFormExceptionCodeLabel}">
+										<form:fields>
+											<Input
+												id="exceptionCodeId" 
+												type="Text" 
+												showValueHelp="true" 
+												showSuggestion="true" 
+												valueHelpOnly="true" 
+												valueHelpRequest="onValueHelpRequest" 
+												textFormatMode="KeyValue" 
+												suggestionItems="{toExceptionCodes}" 
+												width="100%" 
+												change="onExceptionCodeChange">
+												<suggestionItems>
+													<core:ListItem key="{ExceptionCode}" text="{Description}"/>
+												</suggestionItems>
+											</Input>
+											
+											<Button 
+												id="exceptionCodeClearId" 
+												enabled="false" 
+												width="100%" 
+												icon="sap-icon://eraser" 
+												tooltip="{i18n>objectFormExceptionButton}" 
+												press="onExceptionEraserPress"/>
+												
+										</form:fields>
+									</form:FormElement>
+									
+								</form:formElements>
+								
+							</form:FormContainer>
+						</form:formContainers>
+					</form:Form>
+
+					</smartform:GroupElement>
+				</smartform:Group>
+				
+			</smartform:SmartForm>
+ 		</semantic:content>
+
+	<semantic:saveAction>
+	    <semantic:SaveAction enabled="false" id="submitId" press="onSubmit"/>
+	</semantic:saveAction>
+
+	</semantic:FullscreenPage>
+</mvc:View>
